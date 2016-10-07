@@ -10,7 +10,7 @@ namespace Services.Tests
     public class MainViewModelTests
     {
         [Test]
-        public void Test()
+        public void When_PostsCommand_IsCalled_ItQueries_the_Repository_For_Data()
         {
             Mock<IPostsRepository> repMock = new Mock<IPostsRepository>();
             repMock.Setup(a => a.GetPosts()).ReturnsAsync(new List<Post>() { new Post() {Body = "body", Id = "1", Title = "title", UserId = "userid"}});
