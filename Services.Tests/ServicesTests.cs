@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using GlobalLogigDemoApp.Services;
-using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 
 namespace Services.Tests

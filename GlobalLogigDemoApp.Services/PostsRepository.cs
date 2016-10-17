@@ -1,10 +1,6 @@
 ﻿using System;
-using System.CodeDom;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 
@@ -31,12 +27,6 @@ namespace GlobalLogigDemoApp.Services
                     var post = new Post() { Id = jsonPost.id, UserId = jsonPost.userId, Title = jsonPost.title, Body = jsonPost.body };
                     posts.Add(post);
                 }
-
-                //if (posts.Any())
-                //{
-
-                //    throw new PostsRepositoryException("Some Error has occured connecting to the Posts feed. Please try after sometime.");
-                //}
 
                 return posts;
             }
