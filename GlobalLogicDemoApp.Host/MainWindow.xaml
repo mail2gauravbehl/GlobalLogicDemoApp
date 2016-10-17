@@ -3,32 +3,47 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="MainWindow" Height="700" Width="800" Background='Azure'>
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="6*"/>
-            <ColumnDefinition Width="4*"/>
-        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <StackPanel Orientation="Horizontal" Margin="10">
+        <StackPanel Orientation="Vertical" Margin="10">
+            <StackPanel Orientation="Horizontal">
             <TextBlock Text="Click the button to fetch Posts From Service : "/>
             <Button  Content="Get All Posts." Command="{Binding PostsCommand}"/>
+            </StackPanel>
+            <TextBlock Text="{Binding PostsCommand.Execution.ErrorMessage }" Margin="5" >
+                <TextBlock.Style>
+                <Style TargetType="TextBlock">
+                    <Setter Property="Foreground" Value="Red"/>
+                    <Setter Property="FontWeight" Value="Bold"/>
+                    <Setter Property="FontSize" Value="20"/>
+                </Style>
+                </TextBlock.Style>
+            </TextBlock>
         </StackPanel>
-        <!--<ListView Margin="10" Name="lvposts" ItemsSource="{Binding Posts.Result}" SelectedItem="{Binding SelectedItem}" Grid.Row="1"-->
-        <ListView Margin="10" Name="lvposts" ItemsSource="{Binding PostsCommand.Execution.Result}" SelectedItem="{Binding SelectedItem}" Grid.Row="1"
+        <Grid Grid.Row="1" x:Name="MainGrid" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="4*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="4*"/>
+            </Grid.ColumnDefinitions>
+            <ListView Margin="10" Name="lvposts" ItemsSource="{Binding PostsCommand.Execution.Result}" SelectedItem="{Binding SelectedItem}"
                   Grid.Column="0">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn Header="Id" Width="30" DisplayMemberBinding="{Binding Id}" />
-                    <GridViewColumn Header="Title" Width="Auto" DisplayMemberBinding="{Binding Title}" />
-                </GridView>
-            </ListView.View>
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="Id" Width="30" DisplayMemberBinding="{Binding Id}" />
+                        <GridViewColumn Header="Title" Width="Auto" DisplayMemberBinding="{Binding Title}" />
+                    </GridView>
+                </ListView.View>
 
-        </ListView>
-        <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Vertical" Margin="5,7" >
-            <TextBlock Text="To view the Body of the post Select an item in the grid." Margin="5" ></TextBlock>
-        <TextBox Text="{Binding SelectedItem.Body}" Height="150" Width="auto" VerticalAlignment="Top" Margin="5" TextWrapping="WrapWithOverflow" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto"></TextBox>
-        </StackPanel>
-    </Grid>
+            </ListView>
+            <GridSplitter Grid.Column="1" Width="5" HorizontalAlignment="Stretch"  Grid.Row="1" ResizeDirection="Columns"/>
+            <StackPanel  Grid.Column="2" Orientation="Vertical" Margin="5,7" >
+                <TextBlock Text="To view the Body of the post Select an item in the grid." Margin="5" ></TextBlock>
+                <TextBox Text="{Binding SelectedItem.Body}" Height="150" Width="auto" VerticalAlignment="Top" Margin="5" TextWrapping="WrapWithOverflow" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto"></TextBox>
+            </StackPanel>
+            </Grid>
+        </Grid>
 </Window>
+

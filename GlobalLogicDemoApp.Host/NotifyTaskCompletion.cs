@@ -1,9 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
-using System.Windows.Input;
-using GlobalLogicDemoApp.Host.Annotations;
 
 namespace GlobalLogicDemoApp.Host
 {
@@ -70,67 +67,5 @@ namespace GlobalLogicDemoApp.Host
         public string ErrorMessage { get { return (InnerException == null) ?
             null : InnerException.Message; } }
         public event PropertyChangedEventHandler PropertyChanged;
-    }
-
-    public class AsyncCommand<TResult> : AsyncCommandBase, INotifyPropertyChanged
-    {
-        private readonly Func<Task<TResult>> _command;
-        private NotifyTaskCompletion<TResult> _execution;
-        public AsyncCommand(Func<Task<TResult>> command)
-        {
-            _command = command;
-        }
-        public override bool CanExecute(object parameter)
-        {
-            return true;
-        }
-        public override Task ExecuteAsync(object parameter)
-        {
-            if (_command == null)
-                return null;
-            Execution = new NotifyTaskCompletion<TResult>(_command());
-            return Execution.TaskCompletion;
-        }
-        // Raises PropertyChanged
-        public NotifyTaskCompletion<TResult> Execution 
-        {
-            get { return _execution; }
-            private set
-            {
-                _execution = value;
-                OnPropertyChanged();
-            }
-        }
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        [NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            var handler = PropertyChanged;
-            if (handler != null) handler(this, new PropertyChangedEventArgs(propertyName));
-        }
-    }
-
-    public abstract class AsyncCommandBase : IAsyncCommand
-    {
-        public abstract bool CanExecute(object parameter);
-        public abstract Task ExecuteAsync(object parameter);
-        public async void Execute(object parameter)
-        {
-            await ExecuteAsync(parameter);
-        }
-        public event EventHandler CanExecuteChanged
-        {
-            add { CommandManager.RequerySuggested += value; }
-            remove { CommandManager.RequerySuggested -= value; }
-        }
-        protected void RaiseCanExecuteChanged()
-        {
-            CommandManager.InvalidateRequerySuggested();
-        }
-    }
-    public interface IAsyncCommand : ICommand
-    {
-        Task ExecuteAsync(object parameter);
     }
 }

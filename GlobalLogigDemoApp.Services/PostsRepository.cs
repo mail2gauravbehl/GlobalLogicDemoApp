@@ -1,4 +1,5 @@
 ﻿using System;
+using System.CodeDom;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -11,9 +12,12 @@ namespace GlobalLogigDemoApp.Services
 {
     public class PostsRepository : IPostsRepository
     {
+        LoggerWrapper logger = new LoggerWrapper(typeof(PostsRepository));
+
         public async Task<IEnumerable<Post>> GetPosts()
         {
             List<Post> posts = new List<Post>();
+
             try
             {
                 var httpClient = new HttpClient();
@@ -27,20 +31,33 @@ namespace GlobalLogigDemoApp.Services
                     var post = new Post() { Id = jsonPost.id, UserId = jsonPost.userId, Title = jsonPost.title, Body = jsonPost.body };
                     posts.Add(post);
                 }
+
+                //if (posts.Any())
+                //{
+
+                //    throw new PostsRepositoryException("Some Error has occured connecting to the Posts feed. Please try after sometime.");
+                //}
+
                 return posts;
             }
             catch (HttpRequestException exception)
             {
-                throw;
+                logger.LogError(exception.Message, exception);
+                throw new PostsRepositoryException("Some Error has occured connecting to the Posts feed. Please try after sometime.");
             }
             catch (Exception genericException)
             {
-                throw;
+                logger.LogError(genericException.Message, genericException);
+
+                throw new PostsRepositoryException("Some Error has occured connecting to the Posts feed. Please try after sometime.");
             }
-
-            return posts;
         }
+    }
 
-
+    public class PostsRepositoryException : Exception
+    {
+        public PostsRepositoryException(string message) : base(message)
+        {
+        }
     }
 }
