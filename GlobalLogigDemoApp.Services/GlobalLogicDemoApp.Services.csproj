@@ -52,6 +52,7 @@
     <Compile Include="LoggerWrapper.cs" />
     <Compile Include="Post.cs" />
     <Compile Include="PostsRepository.cs" />
+    <Compile Include="PostsRepositoryException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
