@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using GlobalLogigDemoApp.Services;
+using GlobalLogigDemoApp.Services.Domain;
+using GlobalLogigDemoApp.Services.Repositories;
 using NUnit.Framework;
 
 namespace Services.Tests
@@ -16,6 +18,16 @@ namespace Services.Tests
             var postsResult = posts.Result;
 
             Assert.IsNotNull(postsResult);
+        } 
+        
+        [Test]
+        public void When_Comments_Is_Called_It_Returns_One_Comment()
+        {
+            ICommentsRepository commentRepository = new CommentsRepository();
+            Task<IEnumerable<Comment>> comments = commentRepository.GetComments("1");
+            var commentsResult = comments.Result;
+
+            Assert.IsNotNull(commentsResult);
         }
     }
 }

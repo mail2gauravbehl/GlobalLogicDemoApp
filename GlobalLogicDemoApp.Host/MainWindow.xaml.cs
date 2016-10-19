@@ -1,5 +1,8 @@
 ﻿using System.Windows;
 using GlobalLogigDemoApp.Services;
+using GlobalLogigDemoApp.Services.Domain;
+using GlobalLogigDemoApp.Services.Formatter;
+using GlobalLogigDemoApp.Services.Repositories;
 
 namespace GlobalLogicDemoApp.Host
 {
@@ -13,7 +16,9 @@ namespace GlobalLogicDemoApp.Host
             InitializeComponent();
             //TODO: Can be injected through DI container
             IPostsRepository postsRepository = new PostsRepository();
-            DataContext = new MainViewModel(postsRepository);
+            ICommentsRepository commentsRepository = new CommentsRepository();
+            IFormatterFactory formatterFactory = new FormatterFactory();
+            DataContext = new MainViewModel(postsRepository, commentsRepository, formatterFactory);
         }
     }
 }

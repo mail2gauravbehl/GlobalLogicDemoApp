@@ -7,5 +7,13 @@ namespace GlobalLogigDemoApp.Services
         public PostsRepositoryException(string message) : base(message)
         {
         }
+    } 
+    
+    public class CommentsRepositoryException : Exception
+    {
+        public CommentsRepositoryException(string message)
+            : base(message)
+        {
+        }
     }
 }

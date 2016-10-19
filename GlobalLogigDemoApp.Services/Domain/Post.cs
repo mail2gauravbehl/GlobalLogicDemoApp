@@ -1,4 +1,4 @@
-﻿namespace GlobalLogigDemoApp.Services
+﻿namespace GlobalLogigDemoApp.Services.Domain
 {
     public class Post
     {
